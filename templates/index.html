@@ -141,7 +141,7 @@
 
     <!-- AJAX Formspree Redirect -->
     <script>
-	document.getElementById("contact-form").addEventListener("submit", async function(event) {
+document.getElementById("contact-form").addEventListener("submit", async function(event) {
     event.preventDefault();
 
     const form = event.target;
@@ -149,7 +149,7 @@
 
     const button = form.querySelector("button[type='submit']");
     const loader = document.getElementById("form-loading");
-    const overlay = document.getElementById("success-overlay");
+    const shutter = document.getElementById("shutter-overlay");
 
     // Show loader
     loader.style.display = "block";
@@ -167,21 +167,28 @@
             // Hide loader
             loader.style.display = "none";
 
-            // Trigger cinematic overlay
-            overlay.classList.add("active");
+            // Trigger camera shutter animation
+            shutter.classList.add("active");
 
-            // Redirect after animation
+            // Redirect after animation completes
             setTimeout(() => {
                 window.location.href = "{{ url_for('submit') }}";
-            }, 2200); // matches animation timing
+            }, 1300); // matches shutter animation timing
         } else {
             alert("There was a problem submitting your form.");
         }
     } catch (error) {
         alert("There was a network error. Please try again.");
     }
-	});
-	</script>
+});
+</script>
+
+
+	<!-- Camera Shutter Overlay -->
+	<div id="shutter-overlay">
+    	<div class="shutter-blades"></div>
+	</div>
+
 
 
 
