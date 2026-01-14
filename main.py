@@ -9,7 +9,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/submit')
-def get_form():
+def submit():
     return render_template('submit.html')
 
 
