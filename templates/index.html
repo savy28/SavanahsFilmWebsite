@@ -18,10 +18,7 @@
     <div id="wrapper">
 
 
-		<!-- Camera Shutter Overlay -->
-		<div id="shutter-overlay">
-			<div class="shutter-blades"></div>
-		</div>
+		<div id="fade-overlay"></div>
 
 
         <!-- Nav -->
@@ -156,7 +153,7 @@ document.getElementById("contact-form").addEventListener("submit", async functio
 
     const button = form.querySelector("button[type='submit']");
     const loader = document.getElementById("form-loading");
-    const shutter = document.getElementById("shutter-overlay");
+    const fade = document.getElementById("fade-overlay");
 
     // Show loader
     loader.style.display = "block";
@@ -174,21 +171,28 @@ document.getElementById("contact-form").addEventListener("submit", async functio
             // Hide loader
             loader.style.display = "none";
 
-            // Trigger camera shutter animation
-            shutter.classList.add("active");
+            // Trigger fade-out animation
+            fade.classList.add("active");
 
-            // Redirect after animation completes
+            // Redirect after fade completes
             setTimeout(() => {
                 window.location.href = "{{ url_for('submit') }}";
-            }, 1300); // matches shutter animation timing
+            }, 900); // slightly longer than the fade animation
         } else {
             alert("There was a problem submitting your form.");
+            loader.style.display = "none";
+            button.disabled = false;
+            button.textContent = "Send";
         }
     } catch (error) {
         alert("There was a network error. Please try again.");
+        loader.style.display = "none";
+        button.disabled = false;
+        button.textContent = "Send";
     }
 });
 </script>
+
 
 </body>
 </html>
