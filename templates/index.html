@@ -112,6 +112,11 @@
                     </label>
 
                     <button type="submit">Send</button>
+					<div id="form-loading" style="display:none; margin-top: 1rem;">
+    					<span class="icon solid fa-spinner fa-spin" style="font-size: 1.5rem;"></span>
+    					<span style="margin-left: 0.5rem;">Sending...</span>
+					</div>
+
                 </form>
             </article>
 
@@ -136,29 +141,44 @@
 
     <!-- AJAX Formspree Redirect -->
     <script>
-        document.getElementById("contact-form").addEventListener("submit", async function(event) {
-            event.preventDefault();
+	document.getElementById("contact-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-            const form = event.target;
-            const data = new FormData(form);
+    const form = event.target;
+    const data = new FormData(form);
+    const loader = document.getElementById("form-loading");
 
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: data,
-                    headers: { 'Accept': 'application/json' }
-                });
+    // Show loader
+    loader.style.display = "block";
 
-                if (response.ok) {
-                    window.location.href = "{{ url_for('submit') }}";
-                } else {
-                    alert("There was a problem submitting your form.");
-                }
-            } catch (error) {
-                alert("There was a network error. Please try again.");
-            }
+    // Disable the button so users can't click twice
+    const button = form.querySelector("button[type='submit']");
+    button.disabled = true;
+    button.textContent = "Sending...";
+
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: data,
+            headers: { 'Accept': 'application/json' }
         });
-    </script>
+
+        if (response.ok) {
+            window.location.href = "{{ url_for('submit') }}";
+        } else {
+            alert("There was a problem submitting your form.");
+        }
+    } catch (error) {
+        alert("There was a network error. Please try again.");
+    } finally {
+        // Hide loader if something goes wrong
+        loader.style.display = "none";
+        button.disabled = false;
+        button.textContent = "Send";
+    }
+	});
+	</script>
+
 
 </body>
 </html>
