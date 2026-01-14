@@ -2239,3 +2239,56 @@ img {
 .sepia { filter: sepia(100%); }
 .huerotate { filter: hue-rotate(180deg); }
 .rss.opacity { filter: opacity(50%); }
+
+
+/*Success Overlay*/
+.success-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1.2s ease-in-out, visibility 0s linear 1.2s;
+    z-index: 9999;
+}
+
+.success-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.success-content {
+    text-align: center;
+    color: white;
+    animation: zoomIn 2s ease forwards;
+}
+
+.success-content h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+
+.success-content p {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+

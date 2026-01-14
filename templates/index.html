@@ -141,18 +141,18 @@
 
     <!-- AJAX Formspree Redirect -->
     <script>
-	document.getElementById("contact-form").addEventListener("submit", async function(event) {
+document.getElementById("contact-form").addEventListener("submit", async function(event) {
     event.preventDefault();
 
     const form = event.target;
     const data = new FormData(form);
+
+    const button = form.querySelector("button[type='submit']");
     const loader = document.getElementById("form-loading");
+    const overlay = document.getElementById("success-overlay");
 
     // Show loader
     loader.style.display = "block";
-
-    // Disable the button so users can't click twice
-    const button = form.querySelector("button[type='submit']");
     button.disabled = true;
     button.textContent = "Sending...";
 
@@ -164,20 +164,35 @@
         });
 
         if (response.ok) {
-            window.location.href = "{{ url_for('submit') }}";
+            // Hide loader
+            loader.style.display = "none";
+
+            // Trigger cinematic overlay
+            overlay.classList.add("active");
+
+            // Redirect after animation
+            setTimeout(() => {
+                window.location.href = "{{ url_for('submit') }}";
+            }, 2200); // matches animation timing
         } else {
             alert("There was a problem submitting your form.");
         }
     } catch (error) {
         alert("There was a network error. Please try again.");
-    } finally {
-        // Hide loader if something goes wrong
-        loader.style.display = "none";
-        button.disabled = false;
-        button.textContent = "Send";
     }
 	});
 	</script>
+
+
+
+	<!-- Cinematic Success Overlay -->
+	<div id="success-overlay">
+    	<div class="success-content">
+        	<h1>Message Sent</h1>
+        	<p>Redirecting...</p>
+    	</div>
+	</div>
+
 
 
 </body>
