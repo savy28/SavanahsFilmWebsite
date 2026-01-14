@@ -2242,7 +2242,7 @@ img {
 
 
 /*Success Overlay*/
-.success-overlay {
+#success-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -2258,7 +2258,7 @@ img {
     z-index: 9999;
 }
 
-.success-overlay.active {
+#success-overlay.active {
     opacity: 1;
     visibility: visible;
     transition: opacity 1.2s ease-in-out;
@@ -2291,4 +2291,5 @@ img {
         opacity: 1;
     }
 }
+
 
